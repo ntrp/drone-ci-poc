@@ -17,18 +17,34 @@ steps:
       - ./node_modules
 
 - name: install
+  image: node
+  volumes:
+  - name: cache
+    path: /cache
   commands: 
   - npm i
 
 - name: test
+  image: node
+  volumes:
+  - name: cache
+    path: /cache
   commands: 
   - npm test
 
 - name: build
+  image: node
+  volumes:
+  - name: cache
+    path: /cache
   commands: 
   - npm run build
 
 - name: push
+  image: node
+  volumes:
+  - name: cache
+    path: /cache
   commands: 
   - echo push
   depends_on:
