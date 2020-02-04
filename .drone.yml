@@ -31,6 +31,8 @@ steps:
     path: /cache
   commands: 
   - npm test
+  depends_on:
+  - install
 
 - name: build
   image: node
@@ -39,6 +41,8 @@ steps:
     path: /cache
   commands: 
   - npm run build
+  depends_on:
+  - install
 
 - name: push
   image: node
