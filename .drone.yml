@@ -1,0 +1,48 @@
+kind: pipeline
+type: docker
+name: default
+
+shared:
+  image: node
+  volumes:
+  - name: cache
+    path: /cache
+
+steps:
+- name: restore-cache
+  image: drillster/drone-volume-cache
+  settings:
+    restore: true
+    mount:
+      - ./node_modules
+
+- name: install
+  commands: 
+  - npm i
+
+- name: test
+  commands: 
+  - npm test
+
+- name: build
+  commands: 
+  - npm run build
+
+- name: push
+  commands: 
+  - echo push
+  depends_on:
+  - test
+  - build
+
+- name: rebuild-cache
+  image: drillster/drone-volume-cache
+  settings:
+    rebuild: true
+    mount:
+      - ./node_modules
+
+volumes:
+  - name: cache
+    host: 
+      path: /tmp/cache
