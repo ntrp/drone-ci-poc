@@ -61,6 +61,8 @@ steps:
     rebuild: true
     mount:
       - ./node_modules
+  depends_on:
+  - install
 
 volumes:
   - name: cache
